@@ -1,5 +1,11 @@
+language: python
+
 notifications:
   email: false
+
+branches:
+  only:
+  - main
 
 jobs:
   include:
