@@ -1,0 +1,16 @@
+{% set version = "1.0.0" %}
+
+package:
+    name: jdgalileo
+    version: {{ version }}
+
+build:
+    number: 1
+    binary_relocation: False
+
+requirements:
+    run:
+        - python >=3.8
+
+about:
+    license: Apache 2.0

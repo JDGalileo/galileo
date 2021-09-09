@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package galileo.proto;
+option cc_enable_arenas = true;
+
+enum DataType
+{
+    DT_BASE_TYPE = 0;
+    DT_BOOL = 1;
+    DT_INT8 = 2;
+    DT_INT16 = 3;
+    DT_INT32 = 4;
+    DT_INT64 = 5;
+    DT_UINT8 = 6;
+    DT_UINT16 = 7;
+    DT_UINT32 = 8;
+    DT_UINT64 = 9;
+    DT_FLOAT = 10;
+    DT_DOUBLE = 11;
+
+    DT_ARRAY_TYPE = 1024;
+    DT_ARRAY_BOOL = 1025;
+    DT_ARRAY_INT8 = 1026;
+    DT_ARRAY_INT16 = 1027;
+	DT_ARRAY_INT32 = 1028;
+	DT_ARRAY_INT64 = 1029;
+	DT_ARRAY_UINT8 = 1030;
+	DT_ARRAY_UINT16 = 1031;
+	DT_ARRAY_UINT32 = 1032;
+	DT_ARRAY_UINT64 = 1033;
+	DT_ARRAY_FLOAT = 1034;
+    DT_ARRAY_DOUBLE = 1035;
+    DT_ARRAY_STRING = 1036;
+    DT_ARRAY_BINARY = 1037;
+
+    DT_OTHER_TYPE = 2048; 
+    DT_STRING = 2049;
+    DT_BINARY = 2050;
+    DT_INVALID_TYPE = -1;
+}

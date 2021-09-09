@@ -1,0 +1,15 @@
+__pycache__/
+_ext/
+build/
+dist/
+.cache/
+.eggs/
+*.egg-info/
+.coverage*
+*.so*
+.*.swp
+.vscode/
+.DS_Store
+.models/
+.logs/
+.data/

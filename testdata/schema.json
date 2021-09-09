@@ -1,0 +1,50 @@
+{
+    "vertexes":
+    [
+        {
+            "vtype": 0,
+            "entity": "DT_INT64",
+            "weight": "DT_FLOAT",
+            "attrs":
+            [
+                { "name": "cid",   "dtype": "DT_INT16" },
+                { "name": "price", "dtype": "DT_FLOAT" }
+            ]
+        },
+        {
+            "vtype": 1,
+            "entity": "DT_INT64",
+            "weight": "DT_FLOAT",
+            "attrs":
+            [
+                { "name": "age",  "dtype": "DT_INT16" },
+                { "name": "edu",  "dtype": "DT_ARRAY_INT64"},
+                { "name": "addr", "dtype": "DT_FLOAT"},
+                { "name": "test", "dtype": "DT_ARRAY_INT32" }
+            ]
+        }
+    ],
+    "edges":
+    [
+        {
+            "etype": 0,
+            "entity_1": "DT_INT64",
+            "entity_2": "DT_INT64",
+            "weight": "DT_FLOAT",
+            "attrs": []
+        },
+        {
+            "etype": 1,
+            "entity_1": "DT_INT64",
+            "entity_2": "DT_INT64",
+            "weight": "DT_FLOAT",
+            "attrs":
+            [
+                { "name": "discounts", "dtype": "DT_FLOAT" },
+                { "name": "purchase_num", "dtype": "DT_INT32" },
+                { "name": "test", "dtype": "DT_ARRAY_INT32" },
+		        { "name": "attr1", "dtype": "DT_INT64"}
+            ]
+        }
+    ]
+}

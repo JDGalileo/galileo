@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option cc_generic_services = true;
+
+package galileo.proto;
+
+message QueryRequest
+{
+    uint32 op_type = 1; // query type
+    bytes data = 2; // request data
+};
+
+message QueryResponse
+{
+    bytes data = 1; // response data
+};
+
+service GraphQueryService
+{
+    rpc Query(QueryRequest) returns (QueryResponse);
+}
