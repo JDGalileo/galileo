@@ -1,5 +1,11 @@
+language: python
+
 notifications:
   email: false
+
+branches:
+  only:
+  - main
 
 jobs:
   include:
@@ -19,4 +25,4 @@ install:
 
 script:
   - docker run --rm -e BUILD_TARGET=$BUILD_TARGET -v `pwd`:/workspace $DOCKER_IMAGE bash /workspace/docker/build_wheel.sh
-  - ls /workspace/dist
+  - ls dist

@@ -14,6 +14,8 @@
 # limitations under the License.
 # ==============================================================================
 
+source /root/.bashrc
+
 set -e -u
 
 cur_dir=$(cd $(dirname $0);pwd)

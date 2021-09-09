@@ -90,7 +90,7 @@ entry_points = {
     ],
 }
 
-#parallel_compile_extension()
+parallel_compile_extension()
 
 setup(name=package_name,
       version=__version__,
