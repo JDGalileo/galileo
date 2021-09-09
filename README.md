@@ -2,7 +2,7 @@
   <img src="docs/imgs/logo.jpg" height="240" />
 </div>
 
-[![Build Status](https://travis-ci.org/JDGalileo/galileo.svg?branch=main)](https://travis-ci.org/JDGalileo/galileo)
+[![Build Status](https://app.travis-ci.com/JDGalileo/galileo.svg?branch=main)](https://app.travis-ci.com/JDGalileo/galileo)
 [![PyPI version](https://badge.fury.io/py/jdgalileo.svg)](https://badge.fury.io/py/jdgalileo)
 [![Anaconda-Server Badge](https://anaconda.org/jdgalileo/jdgalileo/badges/version.svg)](https://anaconda.org/jdgalileo/jdgalileo)
 
