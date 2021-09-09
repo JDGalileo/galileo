@@ -14,6 +14,8 @@
 # limitations under the License.
 # ==============================================================================
 
+source /root/.bashrc
+
 set -e -u
 
 cur_dir=$(cd $(dirname $0);pwd)
@@ -48,8 +50,6 @@ function build_wheel() {
 	sed -i "s/package_name = '${package_name}'/package_name = 'jdgalileo'/" setup.py
 	popd
 }
-
-source /root/.bashrc || true
 
 if [[ $BUILD_TARGET = "gpu" ]];then
 	build_wheel jdgalileo-gpu
