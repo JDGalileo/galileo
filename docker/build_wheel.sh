@@ -49,6 +49,8 @@ function build_wheel() {
 	popd
 }
 
+source /root/.bashrc || true
+
 if [[ $BUILD_TARGET = "gpu" ]];then
 	build_wheel jdgalileo-gpu
 else
