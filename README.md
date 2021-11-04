@@ -36,6 +36,7 @@ Galileo图深度学习框架采用分层设计理念，主要分为分布式图�
 
 想要了解更多Galileo接口参考[API文档](docs/api.md)。
 
+[Galileo性能测试](docs/performance.md)。
 
 # 联系我们
 欢迎通过issue和邮件组（galileo_opensource@jd.com）联系我们。
