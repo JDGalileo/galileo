@@ -7,7 +7,7 @@
 我们启动了10个图引擎来加载图数据，下表中统计了所有图引擎内存占用总和。
 
 <div align="center">
-    <img src="docs/imgs/mem.jpg" height="450" /><br/>
+    <img src="imgs/mem.jpg" height="450" /><br/>
     Galileo图引擎存储的内存占用情况
 </div>
 
