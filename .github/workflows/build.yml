@@ -32,9 +32,7 @@ jobs:
       - name: build
         run: |
           pwd
-          echo $GITHUB_WORKSPACE
-          ./build.sh
-        shell: bash
+          bash ./build.sh
       - name: test
         run: ./galileo/tests/run_tests.sh
         shell: bash
