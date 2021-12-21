@@ -32,13 +32,13 @@ jobs:
       - name: build
         run: |
           ls
-          python --verison
-          python3 --verison
+          python -V
+          python3 -V
           g++ --version
         shell: bash
       - name: test
         run: |
           ls
-          pytest --verison
+          pytest -V
         shell: bash
       
