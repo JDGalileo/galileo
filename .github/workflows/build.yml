@@ -1,9 +1,7 @@
 name: BuildGalileo
-env:
-  BRANCH: main
 on:
   push:
-    branches: [ $BRANCH ]
+    branches: [ main ]
     paths-ignore:
       - conda/**
       - docker/**
@@ -11,7 +9,7 @@ on:
       - examples/**
       - testdata/**
   pull_request:
-    branches: [ $BRANCH ]
+    branches: [ main ]
     paths-ignore:
       - conda/**
       - docker/**
@@ -29,7 +27,7 @@ jobs:
       - name: check out code
         uses: actions/checkout@v2
         with:
-          ref: $BRANCH
+          ref: main
           submodules: true
       - name: build
         run: |
