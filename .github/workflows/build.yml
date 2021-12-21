@@ -30,9 +30,6 @@ jobs:
           ref: main
           submodules: true
       - name: build
-        run: ./build.sh
-        shell: bash
+        run: bash ./build.sh
       - name: test
-        run: ./galileo/tests/run_tests.sh
-        shell: bash
-      
+        run: bash ./galileo/tests/run_tests.sh
