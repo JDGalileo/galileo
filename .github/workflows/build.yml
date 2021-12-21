@@ -31,8 +31,13 @@ jobs:
           submodules: true
       - name: build
         run: |
-          python3 setup.py build
-          python3 setup.py install
+          whoami
+          pwd
+          echo $LD_LIBRARY_PATH $MAX_JOBS
+          source ~/.bashrc
+          echo $LD_LIBRARY_PATH $MAX_JOBS
+          #python3 setup.py build
+          #python3 setup.py install
         shell: bash
       - name: test
         run: ./galileo/tests/run_tests.sh
