@@ -32,6 +32,7 @@ jobs:
       - name: build
         run: |
           ls /opt/hadoop/lib/native
+          ldconfig
           bash ./build.sh
       - name: test
         run: bash ./galileo/tests/run_tests.sh
