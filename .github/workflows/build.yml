@@ -31,14 +31,10 @@ jobs:
           submodules: true
       - name: build
         run: |
-          ls
-          python -V
-          python3 -V
-          g++ --version
+          python3 setup.py build
+          python3 setup.py install
         shell: bash
       - name: test
-        run: |
-          ls
-          pytest -V
+        run: ./galileo/tests/run_tests.sh
         shell: bash
       
