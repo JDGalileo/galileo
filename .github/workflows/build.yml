@@ -37,8 +37,8 @@ jobs:
           export LIBRARY_PATH=/lib64:/usr/local/lib:/usr/local/lib64:/usr/lib/jvm/java/jre/lib/amd64/server:/opt/hadoop/lib/native
           echo $LIBRARY_PATH
           ld --verbose
-          python3 setup.py build
-          python3 setup.py install
-          python3 -c "import galileo; import galileo.tf"
+          #python3 setup.py build
+          #python3 setup.py install
+          #python3 -c "import galileo; import galileo.tf"
       - name: test
         run: bash ./galileo/tests/run_tests.sh
