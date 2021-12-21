@@ -21,6 +21,7 @@ export CLASSPATH=$(/opt/hadoop/bin/hadoop classpath --glob)
 export PATH=/opt/python/cp38-cp38/bin:/usr/lib/jvm/java/bin:/usr/local/zookeeper/bin:/opt/hadoop/bin:$PATH
 export LD_LIBRARY_PATH=/lib64:/usr/local/lib:/usr/local/lib64:/usr/lib/jvm/java/jre/lib/amd64/server:/opt/hadoop/lib/native:$LD_LIBRARY_PATH
 export MAX_JOBS=8
+ldconfig
 
 python3 setup.py build
 python3 setup.py install
