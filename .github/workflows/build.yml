@@ -30,14 +30,7 @@ jobs:
           ref: main
           submodules: true
       - name: build
-        run: |
-          whoami
-          pwd
-          echo $LD_LIBRARY_PATH $MAX_JOBS
-          source ~/.bashrc
-          echo $LD_LIBRARY_PATH $MAX_JOBS
-          #python3 setup.py build
-          #python3 setup.py install
+        run: ./build.sh
         shell: bash
       - name: test
         run: ./galileo/tests/run_tests.sh
