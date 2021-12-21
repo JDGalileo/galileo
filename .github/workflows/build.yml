@@ -31,8 +31,9 @@ jobs:
           submodules: true
       - name: build
         run: |
-          ls /opt/hadoop/lib/native
-          ldconfig
-          bash ./build.sh
+          source ./build.sh
+          python3 setup.py build
+          python3 setup.py install
+          python3 -c "import galileo; import galileo.tf"
       - name: test
         run: bash ./galileo/tests/run_tests.sh
