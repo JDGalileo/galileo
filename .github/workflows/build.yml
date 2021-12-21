@@ -1,0 +1,46 @@
+name: BuildGalileo
+env:
+  BRANCH: main
+on:
+  push:
+    branches: [ $BRANCH ]
+    paths-ignore:
+      - conda/**
+      - docker/**
+      - docs/**
+      - examples/**
+      - testdata/**
+  pull_request:
+    branches: [ $BRANCH ]
+    paths-ignore:
+      - conda/**
+      - docker/**
+      - docs/**
+      - examples/**
+      - testdata/**
+  workflow_dispatch:
+
+jobs:
+  build_and_test:
+    name: build and test Galileo in docker container
+    runs-on: ubuntu-latest
+    container: jdgalileo/galileo:devel-cpu
+    steps:
+      - name: check out code
+        uses: actions/checkout@v2
+        with:
+          ref: $BRANCH
+          submodules: true
+      - name: build
+        run: |
+          ls
+          python --verison
+          python3 --verison
+          g++ --version
+        shell: bash
+      - name: test
+        run: |
+          ls
+          pytest --verison
+        shell: bash
+      
