@@ -20,7 +20,7 @@ cur_dir=$(cd $(dirname $0);pwd)
 
 zkServer.sh start || true
 python3 ${cur_dir}/service.py &
-pytest ${cur_dir}/tf/ -v
-pytest ${cur_dir}/pytorch/ -v
-pytest ${cur_dir}/test_layers.py -v
-pytest ${cur_dir}/test_transforms.py -v
+python3 -m pytest ${cur_dir}/tf/ -v
+python3 -m pytest ${cur_dir}/pytorch/ -v
+python3 -m pytest ${cur_dir}/test_layers.py -v
+python3 -m pytest ${cur_dir}/test_transforms.py -v
