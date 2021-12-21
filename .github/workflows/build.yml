@@ -32,6 +32,8 @@ jobs:
       - name: build
         run: |
           source ./build.sh
+          echo $LIBRARY_PATH
+          export LIBRARY_PATH=/lib64:/usr/local/lib:/usr/local/lib64:/usr/lib/jvm/java/jre/lib/amd64/server:/opt/hadoop/lib/native
           python3 setup.py build
           python3 setup.py install
           python3 -c "import galileo; import galileo.tf"
