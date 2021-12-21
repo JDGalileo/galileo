@@ -30,7 +30,10 @@ jobs:
           ref: main
           submodules: true
       - name: build
-        run: ./build.sh
+        run: |
+          pwd
+          echo $GITHUB_WORKSPACE
+          ./build.sh
         shell: bash
       - name: test
         run: ./galileo/tests/run_tests.sh
