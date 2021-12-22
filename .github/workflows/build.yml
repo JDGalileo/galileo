@@ -27,7 +27,7 @@ jobs:
       - name: check out code
         uses: actions/checkout@v2
         with:
-          ref: JDGalileo-patch-1
+          ref: main
           submodules: true
       - name: build
         run: |
