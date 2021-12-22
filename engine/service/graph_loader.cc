@@ -27,7 +27,6 @@
 #include <vector>
 
 #include "common/macro.h"
-#include "common/schema.h"
 #include "common/singleton.h"
 #include "glog/logging.h"
 #include "quickjson/value.h"
@@ -37,33 +36,55 @@
 
 namespace galileo {
 namespace service {
-using Schema = galileo::schema::Schema;
 
-GraphLoader::GraphLoader(const galileo::service::GraphConfig& config) {
+GraphLoader::GraphLoader(const galileo::service::GraphConfig& config)
+    : graph_config_(config) {}
+
+bool GraphLoader::Init() {
   galileo::utils::FileConfig file_config;
-  if (config.IsLocal()) {
+  if (graph_config_.IsLocal()) {
     file_system_.reset(new galileo::utils::LocalFileSystem());
   } else {
-    file_config["hdfs_addr"] = config.hdfs_addr;
-    file_config["hdfs_port"] = std::to_string(config.hdfs_port);
+    file_config["hdfs_addr"] = graph_config_.hdfs_addr;
+    file_config["hdfs_port"] = std::to_string(graph_config_.hdfs_port);
     file_system_.reset(new galileo::utils::HdfsFileSystem());
   }
   if (!file_system_->Init(file_config)) {
-    LOG(ERROR) << " Init filesystem error";
+    LOG(ERROR) << "[Engine] Init filesystem error";
+    return false;
   }
+  return true;
 }
 
-bool GraphLoader::_GetPartitionFiles(
-    const galileo::service::GraphConfig& config,
-    std::vector<std::string>& vertex_file_list,
-    std::vector<std::string>& edge_file_list, size_t& num_partitions) {
+bool GraphLoader::LoadSchema() {
+  std::shared_ptr<galileo::utils::IFileReader> schema_file =
+      file_system_->OpenFileReader(graph_config_.schema_path.c_str());
+  if (!schema_file) {
+    LOG(ERROR) << "[Engine] Can't find the schema file";
+    return false;
+  }
+  const size_t buff_size = 64 * 1024;
+  char buff[buff_size] = {0};
+  schema_file->Read(buff, buff_size, nullptr);
+
+  Schema* schema = galileo::common::Singleton<Schema>::GetInstance();
+  if (unlikely(!schema->Build(buff))) {
+    LOG(ERROR) << "[Engine] Build schema fail!";
+    return false;
+  }
+  return true;
+}
+
+bool GraphLoader::_GetPartitionFiles(std::vector<std::string>& vertex_file_list,
+                                     std::vector<std::string>& edge_file_list,
+                                     size_t& num_partitions) {
   vertex_file_list.clear();
   edge_file_list.clear();
 
   std::vector<std::string> all_files;
-  file_system_->ListFiles(config.data_path.c_str(), all_files);
+  file_system_->ListFiles(graph_config_.data_path.c_str(), all_files);
   std::ostringstream err_msg;
-  err_msg << " NO valid vertex/edge files in path: " << config.data_path
+  err_msg << " NO valid vertex/edge files in path: " << graph_config_.data_path
           << ". vertex pattern: vertex_#_#.dat, edge pattern: edge_#_#.dat";
   if (all_files.empty()) {
     LOG(ERROR) << err_msg.str();
@@ -95,7 +116,8 @@ bool GraphLoader::_GetPartitionFiles(
     } else if (file_name_vec[0] == "edge") {
       edge_part.insert(part_index);
     }
-    if (part_index % config.shard_count != config.shard_index) continue;
+    if (part_index % graph_config_.shard_count != graph_config_.shard_index)
+      continue;
     if (file_name_vec[0] == "vertex") {
       vertex_file_list.push_back(path_name);
     } else if (file_name_vec[0] == "edge") {
@@ -103,7 +125,8 @@ bool GraphLoader::_GetPartitionFiles(
     }
   }
   if (vertex_file_list.empty() && edge_file_list.empty()) {
-    LOG(ERROR) << err_msg.str() << " for engine index " << config.shard_index;
+    LOG(ERROR) << err_msg.str() << " for engine index "
+               << graph_config_.shard_index;
     return false;
   }
   if (vertex_part.empty()) {
@@ -116,7 +139,7 @@ bool GraphLoader::_GetPartitionFiles(
                  << edge_part.size() << ")";
   }
   num_partitions = vertex_part.size();
-  LOG(INFO) << " Engine index " << config.shard_index
+  LOG(INFO) << " Engine index " << graph_config_.shard_index
             << ", vertex files: " << vertex_file_list.size()
             << ", edge files: " << edge_file_list.size()
             << ", num_partitions: " << num_partitions;
@@ -137,13 +160,12 @@ bool GraphLoader::_GetPartitionFiles(
     VEC.clear();                                              \
   }
 
-bool GraphLoader::LoadGraph(Graph* graph,
-                            const galileo::service::GraphConfig& config) {
+bool GraphLoader::LoadGraph(Graph* graph) {
   size_t thread_num = static_cast<size_t>(std::thread::hardware_concurrency());
   std::vector<LoadInfo> load_infos;
   std::vector<std::string> vertex_files, edge_files;
   size_t num_partitions = 0;
-  if (!_GetPartitionFiles(config, vertex_files, edge_files, num_partitions)) {
+  if (!_GetPartitionFiles(vertex_files, edge_files, num_partitions)) {
     return false;
   }
   graph->SetPartitions((uint32_t)num_partitions);
