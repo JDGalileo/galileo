@@ -33,8 +33,8 @@ jobs:
         run: |
           source ./docker/env.sh
           python3 setup.py build
-          python3 setup.py install
       - name: test
         run: |
           source ./docker/env.sh
+          python3 setup.py develop
           bash ./galileo/tests/run_tests.sh
