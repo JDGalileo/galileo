@@ -14,6 +14,7 @@
 // ==============================================================================
 
 #include "service/graph.h"
+
 #include <fstream>
 #include <sstream>
 
@@ -46,25 +47,17 @@ bool Graph::Init(const galileo::service::GraphConfig& config) {
   edge_map_.clear();
   num_shards_ = config.shard_count;
 
-  graph_loader_.reset(new GraphLoader(config));
-  std::shared_ptr<galileo::utils::IFileReader> schema_file =
-      graph_loader_->GetFileSystem()->OpenFileReader(
-          config.schema_path.c_str());
-  if (nullptr == schema_file.get()) {
-    LOG(ERROR) << " Cant find the schema file";
+  GraphLoader graph_loader(config);
+  if (unlikely(!graph_loader.Init())) {
     return false;
   }
-
-  Schema* schema = galileo::common::Singleton<Schema>::GetInstance();
-
-  char buff[10 * 1024] = {0};
-  schema_file->Read(buff, 10 * 1024, nullptr);
-  if (unlikely(!schema->Build(buff))) {
-    LOG(ERROR) << " Build schema fail!";
+  if (unlikely(!graph_loader.LoadSchema())) {
     return false;
   }
 
   galileo::common::Singleton<EntityPoolManager>::GetInstance()->Init();
+
+  Schema* schema = galileo::common::Singleton<Schema>::GetInstance();
   size_t vtype_num = static_cast<size_t>(schema->GetVTypeNum());
   size_t etype_num = static_cast<size_t>(schema->GetETypeNum());
 
@@ -73,8 +66,7 @@ bool Graph::Init(const galileo::service::GraphConfig& config) {
   vertex_sum_weight_.resize(vtype_num, 0);
   edge_sum_weight_.resize(etype_num, 0);
 
-  bool result = graph_loader_->LoadGraph(this, config);
-  return result;
+  return graph_loader.LoadGraph(this);
 }
 
 const galileo::common::ShardMeta Graph::QueryShardMeta() {
@@ -607,7 +599,6 @@ void Graph::_SampleEdge(uint8_t edge_type, uint32_t count,
     packer->Pack(sample_edge.first.ptr->dst_id);
   }
 }
-
 
 galileo::proto::DataType transformDataTypeByStrName(const std::string& type) {
   if (type == "DT_INT8") {
