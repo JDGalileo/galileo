@@ -32,13 +32,9 @@ jobs:
       - name: build
         run: |
           source ./docker/env.sh
-          echo build $PATH
-          echo $LD_LIBRARY_PATH
+          python3 setup.py build
+          python3 setup.py install
       - name: test
         run: |
-          echo test $PATH
-          echo $LD_LIBRARY_PATH
           source ./docker/env.sh
-          echo $PATH
-          echo $LD_LIBRARY_PATH
           bash ./galileo/tests/run_tests.sh
