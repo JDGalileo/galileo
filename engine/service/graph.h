@@ -16,6 +16,7 @@
 #pragma once
 
 #include <pthread.h>
+
 #include <atomic>
 #include <iostream>
 #include <memory>
@@ -25,11 +26,10 @@
 #include <utility>
 #include <vector>
 
-#include "glog/logging.h"
-
 #include "common/message.h"
 #include "common/sampler.h"
 #include "common/types.h"
+#include "glog/logging.h"
 #include "proto/types.pb.h"
 #include "service/config.h"
 #include "service/edge.h"
@@ -62,9 +62,7 @@ class Graph {
     }
   }
 
-  void SetPartitions(uint32_t partitions_) {
-    num_partitions_ = partitions_;
-  }
+  void SetPartitions(uint32_t partitions_) { num_partitions_ = partitions_; }
 
   bool AddVertexs(std::vector<Vertex*>& vec);
 
@@ -119,7 +117,6 @@ class Graph {
   SimpleSampler<uint8_t> vertex_type_samplers_;
   SimpleSampler<uint8_t> edge_type_samplers_;
 
-  std::shared_ptr<GraphLoader> graph_loader_;
   uint32_t num_shards_;
   uint32_t num_partitions_;
 };

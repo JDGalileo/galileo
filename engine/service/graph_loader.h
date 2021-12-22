@@ -20,6 +20,7 @@
 #include <utility>
 #include <vector>
 
+#include "common/schema.h"
 #include "common/types.h"
 #include "service/edge.h"
 #include "service/file_reader_helper.h"
@@ -34,6 +35,7 @@ enum LoadType { LoadVertexType, LoadEdgeType };
 
 using VERTEXVEC = std::vector<Vertex*>;
 using EDGEVEC = std::vector<Edge*>;
+using Schema = galileo::schema::Schema;
 
 struct LoadInfo {
   std::string* file;
@@ -45,11 +47,11 @@ struct LoadInfo {
 class GraphLoader {
  public:
   GraphLoader(const galileo::service::GraphConfig& config);
-
   virtual ~GraphLoader() {}
-  galileo::utils::FileSystem* GetFileSystem() { return file_system_.get(); }
 
-  bool LoadGraph(Graph* graph, const galileo::service::GraphConfig& config);
+  bool Init();
+  bool LoadSchema();
+  bool LoadGraph(Graph* graph);
 
  private:
   bool _LoadData(LoadInfo* load_info);
@@ -59,13 +61,13 @@ class GraphLoader {
 
   bool _ParseEdges(FileReaderHelper& file_reader_helper, EDGEVEC* edge_vec);
 
-  bool _GetPartitionFiles(const galileo::service::GraphConfig& config,
-                          std::vector<std::string>& vertex_file_list,
+  bool _GetPartitionFiles(std::vector<std::string>& vertex_file_list,
                           std::vector<std::string>& edge_file_list,
                           size_t& num_partitions);
 
  private:
   std::shared_ptr<galileo::utils::FileSystem> file_system_;
+  galileo::service::GraphConfig graph_config_;
 };
 }  // namespace service
 }  // namespace galileo
