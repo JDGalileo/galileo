@@ -52,6 +52,7 @@ include_directories(SYSTEM
 link_directories(BEFORE
     ${LIBS_PREFIX}/lib
     ${LIBS_PREFIX}/lib64
+    /opt/hadoop/lib/native
 )
 
 # Add external module
