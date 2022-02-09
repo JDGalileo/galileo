@@ -46,7 +46,7 @@ bool Converter::Initialize(int slice_count, const char* schema_path) {
   }
   char buff[64 * 1024] = {0};
   bool is_end = false;
-  size_t readed = file_reader->Read(buff, 64 * 1024, &is_end);
+  file_reader->Read(buff, 64 * 1024, &is_end);
   if (unlikely(!schema_.Build(buff))) {
     LOG(ERROR) << "build schema fail!";
     return false;
