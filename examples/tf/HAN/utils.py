@@ -10,8 +10,7 @@ from sklearn.metrics import f1_score
 
 
 class DataSource(g.DataSource):
-    # url = 'https://github.com/Jhy1993/HAN/tree/master/data/acm'
-    url = 'http://storage.jd.local/pinoctl/graphdata/han'
+    url = 'https://github.com/Jhy1993/HAN/tree/master/data/acm'
 
     def __init__(self, name, root_dir='./.data', **kwargs):
         assert name.lower() in ('acm')
