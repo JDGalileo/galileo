@@ -10,7 +10,7 @@
 | [GATNE直推式](tf/GATNE/README.md) | [Tensorflow](tf/GATNE/transductive.py)（estimator） | - |
 | [GATNE归纳式](tf/GATNE/README.md) | [Tensorflow](tf/GATNE/inductive.py)（estimator）<br/>[Tensorflow支持多种特征](tf/GATNE/custom_inductive.py)（estimator） | - |
 | [HeteSAGE自研模型](tf/heteSAGE/README.md) | [Tensorflow](tf/heteSAGE/semi.py)（estimator） | - |
-
+| [HAN](tf/HAN/README.md) | [Tensorflow](tf/HAN/supervised.py)（estimator） | - |
 备注：
 1. 简单用法是指使用Galileo提供的Layer实现模型，高级用法是指自定义模型实现。
 1. Tensorflow后端下所有模型都支持keras和estimator训练，只是有的模型只提供了部分实现，另外如果使用ps的话只能使用estimator训练了。
